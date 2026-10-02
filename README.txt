@@ -1,44 +1,75 @@
-Ubuntu Prime — Plymouth Boot Animation
+# Ubuntu Prime Plymouth
 
-A custom animated Ubuntu Plymouth theme built from the supplied reference.
+A custom Ubuntu Plymouth theme built from scratch to replace the default boot splash with a cleaner and more polished look.
 
-VISUAL
-• Pure black background
-• Ubuntu mark, upper centre
-• Smooth monochrome rotating spinner, centre
-• Ubuntu wordmark, lower centre
-• Responsive positioning for different resolutions
-• Fade-in sequence at boot
+## Overview
 
-INSTALL
-1. Extract this ZIP.
-2. Open a terminal in the extracted ubuntu-prime folder.
-3. Run:
+This project was created after facing issues with the default Ubuntu Plymouth theme. Instead of modifying the stock version, the theme was rebuilt from scratch to provide a simple, stable, and visually improved boot screen.
 
-    sudo ./install.sh
-(If not execuatable, then make it by, sudo chmod +x ./install.sh)
+## Features
 
-4. Reboot:
+- Custom boot splash design
+- Built from scratch
+- Lightweight and simple
+- Suitable for Ubuntu-based systems
+- Automated installation script
+- Easy to customize
 
-    sudo reboot
+## Requirements
 
-VERIFY
-    plymouth-set-default-theme
+- Ubuntu or an Ubuntu-based Linux distribution
+- Plymouth installed
+- Root privileges (sudo)
 
-It should report:
+## Installation
 
-    ubuntu-prime
+### Quick Install
 
-RESTORE
-Run:
+Simply run the installation script:
 
-    sudo ./uninstall.sh
+```bash
+git clone https://github.com/mr-coder-v4/Plymouth-V4.git
+cd Plymouth-V4
+sudo ./install.sh
+```
 
-The installer records the previously selected Plymouth theme and attempts to restore it.
+The script will automatically:
+- Copy the theme to the Plymouth themes directory
+- Set it as the default theme
+- Update the initramfs
+- Prepare your system for the next boot
 
-NOTES
-This is a Plymouth Script theme. The spinner is made from 48 individual
-frames and is swapped by the Plymouth refresh callback.
+### Manual Installation
 
-The image elements are dynamically centered and vertically positioned using
-the active display size, rather than being hard-coded for only 1366x768.
+If you prefer to install manually, follow these steps:
+
+```bash
+sudo cp -r Plymouth-V4 /usr/share/plymouth/themes/
+sudo update-alternatives --install /usr/share/plymouth/themes/default.plymouth default.plymouth /usr/share/plymouth/themes/Plymouth-V4/Plymouth-V4.plymouth 100
+sudo update-alternatives --set default.plymouth /usr/share/plymouth/themes/Plymouth-V4/Plymouth-V4.plymouth
+sudo update-initramfs -u
+```
+
+## Reboot
+
+After installation, reboot your system to see the new Plymouth theme:
+
+```bash
+sudo reboot
+```
+
+## Customization
+
+You can modify the theme files in the project directory to change visuals, colors, and animation behavior. The Plymouth theme structure is flexible and can be adjusted to match your preferred boot experience.
+
+## Notes
+
+This project is intended for personal use and learning, but it can also be adapted for other Ubuntu-based systems with minor changes.
+
+## License
+
+This project is open for personal and educational use. Please respect the original work and give credit if used in other projects.
+
+## Author
+
+mr-coder-v4
