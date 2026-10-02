@@ -1,0 +1,144 @@
+# Ubuntu Prime — custom Plymouth boot animation
+#
+# Ubuntu mark -> animated spinner -> Ubuntu wordmark.
+# Elements are positioned proportionally to the active display.
+
+mark_image = Image("ubuntu-mark.png");
+mark_sprite = Sprite(mark_image);
+mark_sprite.SetZ(30);
+mark_sprite.SetOpacity(0);
+
+wordmark_image = Image("ubuntu-wordmark.png");
+wordmark_sprite = Sprite(wordmark_image);
+wordmark_sprite.SetZ(10);
+wordmark_sprite.SetOpacity(0);
+
+
+spinner_image[0] = Image("spinner-00.png");
+spinner_image[1] = Image("spinner-01.png");
+spinner_image[2] = Image("spinner-02.png");
+spinner_image[3] = Image("spinner-03.png");
+spinner_image[4] = Image("spinner-04.png");
+spinner_image[5] = Image("spinner-05.png");
+spinner_image[6] = Image("spinner-06.png");
+spinner_image[7] = Image("spinner-07.png");
+spinner_image[8] = Image("spinner-08.png");
+spinner_image[9] = Image("spinner-09.png");
+spinner_image[10] = Image("spinner-10.png");
+spinner_image[11] = Image("spinner-11.png");
+spinner_image[12] = Image("spinner-12.png");
+spinner_image[13] = Image("spinner-13.png");
+spinner_image[14] = Image("spinner-14.png");
+spinner_image[15] = Image("spinner-15.png");
+spinner_image[16] = Image("spinner-16.png");
+spinner_image[17] = Image("spinner-17.png");
+spinner_image[18] = Image("spinner-18.png");
+spinner_image[19] = Image("spinner-19.png");
+spinner_image[20] = Image("spinner-20.png");
+spinner_image[21] = Image("spinner-21.png");
+spinner_image[22] = Image("spinner-22.png");
+spinner_image[23] = Image("spinner-23.png");
+spinner_image[24] = Image("spinner-24.png");
+spinner_image[25] = Image("spinner-25.png");
+spinner_image[26] = Image("spinner-26.png");
+spinner_image[27] = Image("spinner-27.png");
+spinner_image[28] = Image("spinner-28.png");
+spinner_image[29] = Image("spinner-29.png");
+
+spinner_sprite = Sprite(spinner_image[0]);
+spinner_sprite.SetZ(20);
+spinner_sprite.SetOpacity(0);
+
+tick = 0;
+frame = 0;
+
+fun position_elements ()
+{
+    cx = Window.GetX() + Window.GetWidth() / 2;
+    sy = Window.GetY();
+    sh = Window.GetHeight();
+
+    # Proportions matched to the supplied reference.
+    mark_sprite.SetX(cx - mark_image.GetWidth() / 2);
+    mark_sprite.SetY(sy + sh * 0.381 - mark_image.GetHeight() / 2);
+
+    spinner_sprite.SetX(cx - spinner_image[0].GetWidth() / 2);
+    spinner_sprite.SetY(sy + sh * 0.700 - spinner_image[0].GetHeight() / 2);
+
+    wordmark_sprite.SetX(cx - wordmark_image.GetWidth() / 2);
+    wordmark_sprite.SetY(sy + sh * 0.853);
+}
+
+fun refresh_callback ()
+{
+    tick++;
+
+    # Logo fade-in.
+    if (tick < 15)
+    {
+        mark_sprite.SetOpacity(tick / 15.0);
+    }
+    else
+    {
+        mark_sprite.SetOpacity(1);
+    }
+
+    # Spinner appears just after the Ubuntu mark.
+    if (tick < 8)
+    {
+        spinner_sprite.SetOpacity(0);
+    }
+    else if (tick < 18)
+    {
+        spinner_sprite.SetOpacity((tick - 8) / 10.0);
+    }
+    else
+    {
+        spinner_sprite.SetOpacity(1);
+    }
+
+    # Wordmark follows the spinner.
+    if (tick < 18)
+    {
+        wordmark_sprite.SetOpacity(0);
+    }
+    else if (tick < 30)
+    {
+        wordmark_sprite.SetOpacity((tick - 18) / 12.0);
+    }
+    else
+    {
+        wordmark_sprite.SetOpacity(1);
+    }
+
+    # 48-frame continuous loop.
+    if (tick % 2 == 0)
+    {
+        frame++;
+        if (frame >= 30)
+            frame = 0;
+        spinner_sprite.SetImage(spinner_image[frame]);
+    }
+
+    position_elements();
+}
+
+fun display_normal_callback ()
+{
+    mark_sprite.SetOpacity(1);
+    spinner_sprite.SetOpacity(1);
+    wordmark_sprite.SetOpacity(1);
+}
+
+fun quit_callback ()
+{
+    mark_sprite.SetOpacity(0);
+    spinner_sprite.SetOpacity(0);
+    wordmark_sprite.SetOpacity(0);
+}
+
+Plymouth.SetRefreshFunction(refresh_callback);
+Plymouth.SetDisplayNormalFunction(display_normal_callback);
+Plymouth.SetQuitFunction(quit_callback);
+
+position_elements();

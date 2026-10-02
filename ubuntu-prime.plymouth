@@ -1,0 +1,8 @@
+[Plymouth Theme]
+Name=Ubuntu Prime
+Description=Minimal Ubuntu-inspired animated boot splash
+ModuleName=script
+
+[script]
+ImageDir=/usr/share/plymouth/themes/ubuntu-prime
+ScriptFile=/usr/share/plymouth/themes/ubuntu-prime/ubuntu-prime.script
