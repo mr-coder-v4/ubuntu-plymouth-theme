@@ -1,4 +1,4 @@
-# Plymouth V4
+# Ubuntu Prime Plymouth
 
 A custom Ubuntu Plymouth theme built from scratch to replace the default boot splash with a cleaner and more polished look.
 
