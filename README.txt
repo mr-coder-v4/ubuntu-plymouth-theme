@@ -16,6 +16,7 @@ INSTALL
 3. Run:
 
     sudo ./install.sh
+(If not execuatable, then make it by, sudo chmod +x ./install.sh)
 
 4. Reboot:
 
